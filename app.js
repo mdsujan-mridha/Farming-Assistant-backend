@@ -10,14 +10,16 @@ const errorMiddleware = require("./middleware/error");
 
 // import somethings from controller
 const user = require("./routes/userRoute");
-
+// import product 
+const product = require("./routes/productRoute");
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+// user api 
 app.use("/api/v1", user);
-
+// product api 
+app.use("/api/v1", product)
 
 app.use(errorMiddleware);
 module.exports = app;
