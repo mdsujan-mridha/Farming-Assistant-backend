@@ -14,4 +14,5 @@
 13.create logout function on userController.js
 =========================================================================
 14.create product schema 
+15.create single user profile function
 */
