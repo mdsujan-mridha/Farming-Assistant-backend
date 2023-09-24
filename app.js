@@ -12,6 +12,11 @@ const errorMiddleware = require("./middleware/error");
 const user = require("./routes/userRoute");
 // import product 
 const product = require("./routes/productRoute");
+// order route 
+const order = require("./routes/orderRoute");
+// post 
+const post = require("./routes/postRoute");
+
 app.use(express.json());
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -27,6 +32,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/v1", user);
 // product api 
 app.use("/api/v1", product)
+// order router 
+app.use("/api/v1", order);
+// post router 
+app.use("/api/v1", post)
 
+// apply error middleware 
 app.use(errorMiddleware);
 module.exports = app;
