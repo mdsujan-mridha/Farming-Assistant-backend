@@ -8,7 +8,7 @@ const database = require("./config/dbConnection");
 
 //config
 dotenv.config({ path: "./config/config.env" });
-
+// console.log(process.env.STRIPE_SECRET_KEY)
 // connect with database 
 database();
 //handler uncaught type error

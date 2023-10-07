@@ -16,6 +16,8 @@ const product = require("./routes/productRoute");
 const order = require("./routes/orderRoute");
 // post 
 const post = require("./routes/postRoute");
+// payment 
+const payment = require("./routes/paymentRoute");
 
 app.use(express.json());
 const corsOptions = {
@@ -25,6 +27,9 @@ const corsOptions = {
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
+//config
+dotenv.config({ path: "./config/config.env" });
+
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +42,10 @@ app.use("/api/v1", order);
 // post router 
 app.use("/api/v1", post)
 
+// payment 
+app.use("/api/v1", payment)
+
 // apply error middleware 
 app.use(errorMiddleware);
+
 module.exports = app;

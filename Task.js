@@ -15,4 +15,7 @@
 =========================================================================
 14.create product schema 
 15.create single user profile function
+==============================================================
+payment integration with strip
+
 */
