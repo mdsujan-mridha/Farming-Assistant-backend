@@ -7,7 +7,7 @@ const { processPayment, sendStripApiKey } = require("../controllers/paymentContr
 const router = express.Router();
 
 router.route("/payment/process").post(isAuthenticatedUser, processPayment);
-router.route("/stripeapikey").get(isAuthenticatedUser, sendStripApiKey);
+router.route("/stripeapikey").get(sendStripApiKey);
 
 
 
