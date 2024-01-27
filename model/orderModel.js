@@ -43,7 +43,7 @@ const orderSchema = new mongoose.Schema({
 
                 required: true,
             },
-            image: {
+            images: {
                 type: String,
                 required: true
             },

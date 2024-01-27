@@ -5,12 +5,8 @@ const dotenv = require("dotenv");
 const port = process.env.PORT || 5000;
 
 const database = require("./config/dbConnection");
+const cloudinary = require("cloudinary");
 
-//config
-dotenv.config({ path: "./config/config.env" });
-// console.log(process.env.STRIPE_SECRET_KEY)
-// connect with database 
-database();
 //handler uncaught type error
 process.on("uncaughtException", err => {
     console.log(`Err: ${err.message}`);
@@ -18,6 +14,18 @@ process.on("uncaughtException", err => {
     console.log(`Shutting down the server due to uncaught Exception `);
     process.exit(1);
 });
+//config
+dotenv.config({ path: "./config/config.env" });
+// console.log(process.env.STRIPE_SECRET_KEY)
+// connect with database 
+database();
+
+//cloudinary config
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+})
 
 
 // listen app when anyone hit on api from client or any browser 

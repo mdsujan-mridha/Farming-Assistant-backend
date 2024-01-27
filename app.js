@@ -41,7 +41,6 @@ app.use("/api/v1", product)
 app.use("/api/v1", order);
 // post router 
 app.use("/api/v1", post)
-
 // payment 
 app.use("/api/v1", payment)
 

@@ -3,7 +3,7 @@ const Product = require("../model/productModel");
 const ApiFeatures = require("../utils/apiFetures");
 const ErrorHandler = require("../utils/ErrorHandler");
 
-// create product 
+// create product --admin or user
 exports.createProduct = catchAsyncError(async (req, res, next) => {
 
     // add cloudniry here 
@@ -74,7 +74,7 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
         product,
     })
 });
-
+// deleteProduct by admin 
 exports.deleteProduct = catchAsyncError(async (req, res, next) => {
 
     const product = await Product.findById(req.params.id);
