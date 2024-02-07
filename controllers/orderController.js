@@ -1,6 +1,7 @@
 const catchAsyncError = require("../middleware/catchAsyncError");
 const Order = require("../model/orderModel");
 const ErrorHandler = require("../utils/ErrorHandler");
+const Product = require("../model/productModel");
 
 exports.newOrder = catchAsyncError(async (req, res, next) => {
 
@@ -77,7 +78,7 @@ exports.deleteOrder = catchAsyncError(async (req, res, next) => {
     if (!order) {
         return next(new ErrorHandler("No order found", 404));
     }
-    await order.remove();
+    await order.deleteOne();
     res.status(200).json({
         success: true,
         message: "Order deleted successfully",

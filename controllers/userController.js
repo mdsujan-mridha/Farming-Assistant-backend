@@ -199,6 +199,21 @@ exports.getAllUsers = catchAsyncError(async (req, res, next) => {
     })
 });
 
+//  get single user by admin 
+
+exports.getAllUser = catchAsyncError(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return next(new ErrorHandler(`user does not exist id :${req.params.id}`));
+    }
+
+    res.status(200).json({
+        success: true,
+        user,
+    })
+});
+
 // update user role 
 exports.updateUserRole = catchAsyncError(async (req, res, next) => {
     const newUserData = {
@@ -227,7 +242,7 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
             return next(new ErrorHandler(`User does not exist with id : ${req.params.id}`, 400));
         }
     }
-    await user.remove();
+    await user.deleteOne();
     res.status(200).json({
         success: true,
         message: "user deleted Successfully",

@@ -18,7 +18,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
 
-    const resultPerPage = 3;
+    const resultPerPage = 12;
     const productsCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(), req.query)
         .search()
@@ -91,3 +91,11 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
     });
 })
 
+// get all product by admin 
+exports.getAdminProduct = catchAsyncError(async (req, res, next) => {
+    const products = await Product.find();
+    res.status(200).json({
+        success: true,
+        products,
+    })
+})
