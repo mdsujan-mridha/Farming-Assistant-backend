@@ -18,7 +18,7 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get all post
 exports.getAllPost = catchAsyncError(async (req, res, next) => {
 
-    const resultPerPage = 8;
+    const resultPerPage = 4;
     const postCount = await Post.countDocuments();
     const apiFeature = new ApiFeatures(Post.find(), req.query)
         .search()
@@ -48,7 +48,7 @@ exports.getPostDetails = catchAsyncError(async (req, res, next) => {
     }
     res.status(200).json({
         success: true,
-        post
+        post,
     })
 });
 
@@ -81,9 +81,18 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Post not found!", 404));
     }
     await Post.deleteOne();
+    
     res.status(200).json({
         success: true,
         message: "Post delete successfully"
     })
+})
 
+// get all post by admin 
+exports.getAdminPost = catchAsyncError(async (req, res, next) => {
+    const posts = await Post.find();
+    res.status(200).json({
+        success: true,
+        posts,
+    })
 })

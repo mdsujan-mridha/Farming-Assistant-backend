@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-
     title: {
         type: String,
         required: [true, "Post title Required"],
@@ -42,8 +41,6 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
-
 });
 
 

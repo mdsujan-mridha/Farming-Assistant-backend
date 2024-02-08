@@ -4,8 +4,10 @@ const {
     getAllPost,
     getPostDetails,
     updatePost,
-    deletePost
+    deletePost,
+    getAdminPost
 } = require("../controllers/postController");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -16,7 +18,11 @@ router.route("/admin/post/new").post(createPost);
 router.route("/posts").get(getAllPost);
 // get post details 
 router.route("/post/:id").get(getPostDetails);
+// get all post by admin 
+router.route("/admin/posts").get(isAuthenticatedUser, authorizeRoles("admin"), getAdminPost)
 // update and delete post by admin 
-router.route("/admin/post/:id").put(updatePost).delete(deletePost);
-
+router.route("/admin/post/:id")
+    .put(isAuthenticatedUser, authorizeRoles("admin"), updatePost)
+    .delete(isAuthenticatedUser, authorizeRoles("admin"), deletePost);
+    
 module.exports = router;
