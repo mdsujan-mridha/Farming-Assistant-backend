@@ -12,7 +12,7 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 
 // create post by admin
-router.route("/admin/post/new").post(createPost);
+router.route("/admin/post/new").post(isAuthenticatedUser, authorizeRoles("admin"), createPost);
 
 // get all post 
 router.route("/posts").get(getAllPost);
@@ -24,5 +24,5 @@ router.route("/admin/posts").get(isAuthenticatedUser, authorizeRoles("admin"), g
 router.route("/admin/post/:id")
     .put(isAuthenticatedUser, authorizeRoles("admin"), updatePost)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deletePost);
-    
+
 module.exports = router;
