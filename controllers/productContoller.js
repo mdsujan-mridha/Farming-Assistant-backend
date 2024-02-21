@@ -3,6 +3,7 @@ const Product = require("../model/productModel");
 const ApiFeatures = require("../utils/apiFetures");
 const ErrorHandler = require("../utils/ErrorHandler");
 const cloudinary = require("cloudinary");
+
 // create product --admin or user
 
 exports.createProduct = catchAsyncError(async (req, res, next) => {
@@ -33,9 +34,8 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
     })
 
 });
-
+// get all products 
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-
     const resultPerPage = 18;
     const productsCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(), req.query)
@@ -56,10 +56,8 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
         filteredProductsCount,
     });
 });
-
+// get product details
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
-
-
     const product = await Product.findById(req.params.id)
 
     if (!product) {

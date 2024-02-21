@@ -10,7 +10,7 @@ exports.processPayment = catchAsyncError(async(req,res,next) =>{
         amount:req.body.amount,
         currency:"usd",
         metadata:{
-            company:"Panda Commerce",
+            company:"Farming Assistant",
         },
     });
     res.status(200)
