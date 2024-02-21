@@ -2,23 +2,41 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const Product = require("../model/productModel");
 const ApiFeatures = require("../utils/apiFetures");
 const ErrorHandler = require("../utils/ErrorHandler");
-
+const cloudinary = require("cloudinary");
 // create product --admin or user
+
 exports.createProduct = catchAsyncError(async (req, res, next) => {
 
-    // add cloudniry here 
+    let images = [];
+    if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+    } else {
+        images = req.body.images;
+    }
+    const imageLink = [];
+    for (let i = 0; i < images?.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "products",
+        });
+        imageLink.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+        });
+    }
+    req.body.images = imageLink;
+    req.body.user = req.user?.id;
 
     const product = await Product.create(req.body);
     res.status(201).json({
         success: true,
         product,
-    });
+    })
 
 });
 
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
 
-    const resultPerPage = 12;
+    const resultPerPage = 18;
     const productsCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(), req.query)
         .search()

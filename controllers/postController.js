@@ -2,13 +2,37 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const Post = require("../model/postModel");
 const ErrorHandler = require("../utils/ErrorHandler");
 const ApiFeatures = require("../utils/apiFetures");
-
+const cloudinary = require("cloudinary");
 
 // create post 
 exports.createPost = catchAsyncError(async (req, res, next) => {
 
-    // add cloudniry 
+    // console.log(req.body.images);
+
+    let images = [];
+    if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+    } else {
+        images = req.body.images;
+    }
+    const imageLink = [];
+    for (let i = 0; i < images?.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "blogs",
+        });
+        imageLink.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+        });
+    }
+    req.body.images = imageLink;
+    req.body.user = req.user?.id;
+
+
     const post = await Post.create(req.body);
+
+    // console.log(req.body);
+
     res.status(201).json({
         success: true,
         post
@@ -18,7 +42,7 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 // get all post
 exports.getAllPost = catchAsyncError(async (req, res, next) => {
 
-    const resultPerPage = 4;
+    const resultPerPage = 20;
     const postCount = await Post.countDocuments();
     const apiFeature = new ApiFeatures(Post.find(), req.query)
         .search()
@@ -81,7 +105,7 @@ exports.deletePost = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Post not found!", 404));
     }
     await Post.deleteOne();
-    
+
     res.status(200).json({
         success: true,
         message: "Post delete successfully"

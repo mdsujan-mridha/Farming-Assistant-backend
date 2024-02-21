@@ -10,7 +10,6 @@ const cloudinary = require("cloudinary");
 //handler uncaught type error
 process.on("uncaughtException", err => {
     console.log(`Err: ${err.message}`);
-
     console.log(`Shutting down the server due to uncaught Exception `);
     process.exit(1);
 });
@@ -22,9 +21,9 @@ database();
 
 //cloudinary config
 cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
 
