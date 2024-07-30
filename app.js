@@ -19,6 +19,7 @@ const post = require("./routes/postRoute");
 // payment 
 const payment = require("./routes/paymentRoute");
 const video = require("./routes/videoRouter");
+const message = require("./routes/messageRouter");
 
 app.use(express.json());
 const corsOptions = {
@@ -46,6 +47,8 @@ app.use("/api/v1", post)
 app.use("/api/v1", payment);
 // video 
 app.use("/api/v1", video);
+// message
+app.use("/api/v1", message);
 
 
 // apply error middleware 
