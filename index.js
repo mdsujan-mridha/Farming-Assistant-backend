@@ -1,7 +1,7 @@
 const app = require("./app");
 
 const dotenv = require("dotenv");
-
+const path = require('path');
 const port = process.env.PORT || 5000;
 
 const database = require("./config/dbConnection");
@@ -26,6 +26,12 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
+// sendFile will go here 
+app.get("/", async (req, res) => {
+
+    res.sendFile(path.join(__dirname, '/index.html'));
+
+});
 
 // listen app when anyone hit on api from client or any browser 
 const server = app.listen(port, () => {
